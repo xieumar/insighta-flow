@@ -22,6 +22,10 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
+// Routes
+import { uploadRouter } from "./routes/upload.route";
+app.use("/api", uploadRouter);
+
 // Error handling middleware (must be registered last)
 app.use(errorHandler);
 
