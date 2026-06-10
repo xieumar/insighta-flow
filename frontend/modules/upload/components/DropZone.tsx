@@ -42,6 +42,10 @@ export function DropZone({ onSuccess }: DropZoneProps) {
       try {
         await uploadFile(file);
         toast.success("File uploaded and ingested successfully!");
+        // Update datasetId in workspace store
+        const { setDatasetId } = (await import("@/store")).useWorkspaceStore.getState();
+        setDatasetId(file.name);
+        
         onSuccess?.();
       } catch (err: any) {
         toast.error(err.message || "Failed to upload file.");
