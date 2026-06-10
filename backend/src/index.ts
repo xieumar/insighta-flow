@@ -24,7 +24,9 @@ app.get("/health", (req, res) => {
 
 // Routes
 import { uploadRouter } from "./routes/upload.route";
+import { queryRouter } from "./routes/query.route";
 app.use("/api", uploadRouter);
+app.use("/api", queryRouter);
 
 // Error handling middleware (must be registered last)
 app.use(errorHandler);
