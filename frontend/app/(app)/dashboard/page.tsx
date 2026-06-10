@@ -7,6 +7,7 @@ import { Database, Sparkles, UploadCloud } from "lucide-react";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DropZone, IngestionSummary, useUpload } from "@/modules/upload";
 import { useState } from "react";
+import { ResultsTable } from "@/modules/results";
 
 export default function DashboardPage() {
   const datasetId = useWorkspaceStore((state) => state.datasetId);
@@ -18,7 +19,7 @@ export default function DashboardPage() {
       {datasetId ? (
         <div className="space-y-6">
           <QueryBuilder />
-          {/* Results table / charts will go here in PR-13 and PR-14 */}
+          <ResultsTable />
         </div>
       ) : (
         /* Empty State with dialog trigger to Import */
