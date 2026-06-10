@@ -21,6 +21,7 @@ export default function DashboardPage() {
   const { status, metrics } = useUpload();
   const [importOpen, setImportOpen] = useState(false);
   const { results, loading } = useDatasetStore();
+  const [activeTab, setActiveTab] = useState<"table" | "charts">("table");
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
@@ -28,14 +29,56 @@ export default function DashboardPage() {
         {datasetId ? (
           <div className="space-y-8 pb-12">
             <QueryBuilder />
-            <div className="space-y-4">
-              <h2 className="text-lg font-bold tracking-tight text-foreground">Demographic Insights</h2>
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                <IncomeByCategory data={results} loading={loading} />
-                <GenderDistribution data={results} loading={loading} />
-                <AgeHistogram data={results} loading={loading} />
-                <PurchasesOverTime data={results} loading={loading} />
+            
+            <div className="space-y-6">
+              <div className="flex gap-2 border-b border-border">
+                <button
+                  onClick={() => setActiveTab("table")}
+                  className={`pb-3 text-sm font-semibold border-b-2 px-4 transition-all cursor-pointer -mb-[2px] ${
+                    activeTab === "table"
+                      ? "border-primary text-primary"
+                      : "border-transparent text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Results
+                </button>
+                <button
+                  onClick={() => setActiveTab("charts")}
+                  className={`pb-3 text-sm font-semibold border-b-2 px-4 transition-all cursor-pointer -mb-[2px] ${
+                    activeTab === "charts"
+                      ? "border-primary text-primary"
+                      : "border-transparent text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Analytics
+                </button>
               </div>
+
+              {activeTab === "table" ? (
+                <ResultsTable />
+              ) : !loading && results.length === 0 ? (
+                <div className="flex flex-col items-center justify-center border border-dashed border-border rounded-xl p-12 text-center bg-card/25 backdrop-blur-sm">
+                  <div className="rounded-full bg-primary/10 p-3 mb-3 text-primary animate-pulse">
+                    <Database className="size-6" />
+                  </div>
+                  <h3 className="text-sm font-bold text-foreground mb-1">
+                    No analytical insights available
+                  </h3>
+                  <p className="text-xs text-muted-foreground max-w-xs mb-4">
+                    Build and run a query using the workspace controls above to fetch demographic profiles.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <h2 className="text-lg font-bold tracking-tight text-foreground">Demographic Insights</h2>
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                    <IncomeByCategory data={results} loading={loading} />
+                    <GenderDistribution data={results} loading={loading} />
+                    <AgeHistogram data={results} loading={loading} />
+                    <PurchasesOverTime data={results} loading={loading} />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         ) : (
@@ -77,7 +120,6 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
-      {datasetId && <ResultsTable />}
     </div>
   );
 }
