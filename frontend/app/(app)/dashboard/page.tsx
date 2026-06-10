@@ -8,18 +8,35 @@ import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from 
 import { DropZone, IngestionSummary, useUpload } from "@/modules/upload";
 import { useState } from "react";
 import { ResultsTable } from "@/modules/results";
+import { useDatasetStore } from "@/store/dataset.store";
+import {
+  IncomeByCategory,
+  GenderDistribution,
+  AgeHistogram,
+  PurchasesOverTime,
+} from "@/modules/charts";
 
 export default function DashboardPage() {
   const datasetId = useWorkspaceStore((state) => state.datasetId);
   const { status, metrics } = useUpload();
   const [importOpen, setImportOpen] = useState(false);
+  const { results, loading } = useDatasetStore();
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
       <div className="flex-1 overflow-y-auto p-6 md:p-8">
         {datasetId ? (
-          <div className="space-y-6">
+          <div className="space-y-8 pb-12">
             <QueryBuilder />
+            <div className="space-y-4">
+              <h2 className="text-lg font-bold tracking-tight text-foreground">Demographic Insights</h2>
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                <IncomeByCategory data={results} loading={loading} />
+                <GenderDistribution data={results} loading={loading} />
+                <AgeHistogram data={results} loading={loading} />
+                <PurchasesOverTime data={results} loading={loading} />
+              </div>
+            </div>
           </div>
         ) : (
           <div className="flex min-h-[50dvh] flex-col items-center justify-center text-center p-8 border-2 border-dashed border-border rounded-xl bg-card/25 max-w-lg mx-auto mt-12">
