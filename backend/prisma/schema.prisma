@@ -1,6 +1,3 @@
-// This is a placeholder schema.
-// The real schema is added in PR-06 (database schema & migrations).
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +5,26 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model UserProfile {
+  id                 String   @id @default(uuid()) @db.Uuid
+  full_name          String
+  gender             String
+  age                Int
+  country            String
+  income             Float
+  purchased_category String
+  created_at         DateTime @default(now())
+
+  @@index([full_name, age])
+}
+
+model Workspace {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String   @default("Untitled Workspace")
+  query_tree  Json
+  dataset_id  String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 }
