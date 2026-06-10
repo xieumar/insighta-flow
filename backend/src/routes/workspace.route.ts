@@ -1,7 +1,17 @@
 import { Router } from "express";
-import { saveWorkspace, getWorkspaceById } from "../services/workspace.service";
+import { saveWorkspace, getWorkspaceById, getAllWorkspaces, deleteWorkspaceById } from "../services/workspace.service";
 
 const router: Router = Router();
+
+// List all workspaces
+router.get("/workspace", async (req, res, next) => {
+  try {
+    const workspaces = await getAllWorkspaces();
+    res.json(workspaces);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // Save a workspace
 router.post("/workspace", async (req, res, next) => {
@@ -43,6 +53,26 @@ router.get("/workspace/:id", async (req, res, next) => {
     }
 
     res.json(workspace);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Delete a workspace by ID
+router.delete("/workspace/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const success = await deleteWorkspaceById(id);
+
+    if (!success) {
+      res.status(404).json({
+        status: "error",
+        message: `Workspace with ID '${id}' not found or could not be deleted.`,
+      });
+      return;
+    }
+
+    res.json({ status: "success", message: `Workspace with ID '${id}' was deleted.` });
   } catch (error) {
     next(error);
   }
