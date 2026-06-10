@@ -1,13 +1,14 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { BarChart3, Database, Menu, Moon, Play, Sun, UploadCloud } from "lucide-react";
+import { BarChart3, Menu, Moon, Play, Sun, UploadCloud } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { DropZone, IngestionSummary, useUpload } from "@/modules/upload";
 import { useWorkspaceStore } from "@/store";
 import { useState } from "react";
+import { useQueryExecution } from "@/modules/results";
 
 interface TopbarProps {
   onMenuClick?: () => void;
@@ -20,6 +21,10 @@ export function Topbar({ onMenuClick, onRunQuery, queryLoading }: TopbarProps) {
   const datasetId = useWorkspaceStore((state) => state.datasetId);
   const { status, metrics } = useUpload();
   const [open, setOpen] = useState(false);
+  const { runQuery, loading: executionLoading } = useQueryExecution();
+
+  const isLoading = queryLoading !== undefined ? queryLoading : executionLoading;
+  const handleRunQuery = onRunQuery || (() => runQuery());
 
   function toggleTheme() {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -46,7 +51,6 @@ export function Topbar({ onMenuClick, onRunQuery, queryLoading }: TopbarProps) {
       <div className="flex-1" />
 
       <div className="flex items-center gap-2">
-        {/* Import Modal Button */}
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button variant="outline" size="sm" className="h-9 gap-1.5 text-xs font-semibold">
@@ -65,27 +69,24 @@ export function Topbar({ onMenuClick, onRunQuery, queryLoading }: TopbarProps) {
                 <IngestionSummary />
               ) : (
                 <DropZone onSuccess={() => {
-                  // Keep open to show results summary
                 }} />
               )}
             </div>
           </DialogContent>
         </Dialog>
 
-        {/* Run Query Button */}
         {datasetId && (
           <Button
             size="sm"
-            onClick={onRunQuery}
-            disabled={queryLoading}
+            onClick={handleRunQuery}
+            disabled={isLoading}
             className="h-9 gap-1.5 text-xs font-bold shadow-md shadow-primary/10"
           >
             <Play className="size-3.5 fill-current" />
-            {queryLoading ? "Running..." : "Run Query"}
+            {isLoading ? "Running..." : "Run Query"}
           </Button>
         )}
 
-        {/* Theme Toggle */}
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
