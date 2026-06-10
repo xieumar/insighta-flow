@@ -35,13 +35,13 @@ export function IncomeByCategory({ data, loading }: IncomeByCategoryProps) {
         <BarChart data={chartData} margin={{ left: -10, right: 10, top: 10, bottom: 5 }}>
           <XAxis
             dataKey="category"
-            stroke="hsl(var(--muted-foreground))"
+            stroke="var(--muted-foreground)"
             fontSize={11}
             tickLine={false}
             axisLine={false}
           />
           <YAxis
-            stroke="hsl(var(--muted-foreground))"
+            stroke="var(--muted-foreground)"
             fontSize={11}
             tickLine={false}
             axisLine={false}
@@ -49,18 +49,23 @@ export function IncomeByCategory({ data, loading }: IncomeByCategoryProps) {
           />
           <Tooltip
             contentStyle={{
-              background: "hsl(var(--card))",
-              border: "1px border hsl(var(--border))",
+              background: "var(--card)",
+              border: "1px solid var(--border)",
               borderRadius: "8px",
               fontSize: "11px",
-              color: "hsl(var(--foreground))",
+            }}
+            labelStyle={{
+              color: "var(--foreground)",
+              fontWeight: "bold",
+            }}
+            itemStyle={{
+              color: "var(--foreground)",
             }}
             formatter={(value: any) => [`$${Number(value).toLocaleString()}`, "Avg Income"]}
-            labelClassName="font-bold text-foreground"
           />
           <Bar
             dataKey="averageIncome"
-            fill="hsl(var(--primary))"
+            fill="var(--primary)"
             radius={[4, 4, 0, 0]}
             maxBarSize={40}
           />

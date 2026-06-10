@@ -35,34 +35,39 @@ export function PurchasesOverTime({ data, loading }: PurchasesOverTimeProps) {
         <LineChart data={chartData} margin={{ left: -20, right: 10, top: 10, bottom: 5 }}>
           <XAxis
             dataKey="date"
-            stroke="hsl(var(--muted-foreground))"
+            stroke="var(--muted-foreground)"
             fontSize={11}
             tickLine={false}
             axisLine={false}
           />
           <YAxis
-            stroke="hsl(var(--muted-foreground))"
+            stroke="var(--muted-foreground)"
             fontSize={11}
             tickLine={false}
             axisLine={false}
           />
           <Tooltip
             contentStyle={{
-              background: "hsl(var(--card))",
-              border: "1px border hsl(var(--border))",
+              background: "var(--card)",
+              border: "1px solid var(--border)",
               borderRadius: "8px",
               fontSize: "11px",
-              color: "hsl(var(--foreground))",
             }}
-            labelClassName="font-bold text-foreground"
+            labelStyle={{
+              color: "var(--foreground)",
+              fontWeight: "bold",
+            }}
+            itemStyle={{
+              color: "var(--foreground)",
+            }}
             formatter={(value: any) => [value, "Records"]}
           />
           <Line
             type="monotone"
             dataKey="count"
-            stroke="hsl(var(--primary))"
+            stroke="var(--primary)"
             strokeWidth={2}
-            dot={{ r: 3, fill: "hsl(var(--primary))", strokeWidth: 0 }}
+            dot={{ r: 3, fill: "var(--primary)", strokeWidth: 0 }}
             activeDot={{ r: 5, strokeWidth: 0 }}
           />
         </LineChart>

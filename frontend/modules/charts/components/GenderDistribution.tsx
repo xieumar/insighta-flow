@@ -12,9 +12,9 @@ interface GenderDistributionProps {
 }
 
 const COLORS = [
-  "hsl(var(--primary))",
-  "rgba(234, 76, 137, 0.6)",
-  "rgba(234, 76, 137, 0.25)",
+  "var(--chart-1)",
+  "var(--chart-2)",
+  "var(--chart-3)",
 ];
 
 export function GenderDistribution({ data, loading }: GenderDistributionProps) {
@@ -54,11 +54,17 @@ export function GenderDistribution({ data, loading }: GenderDistributionProps) {
           </Pie>
           <Tooltip
             contentStyle={{
-              background: "hsl(var(--card))",
-              border: "1px border hsl(var(--border))",
+              background: "var(--card)",
+              border: "1px solid var(--border)",
               borderRadius: "8px",
               fontSize: "11px",
-              color: "hsl(var(--foreground))",
+            }}
+            labelStyle={{
+              color: "var(--foreground)",
+              fontWeight: "bold",
+            }}
+            itemStyle={{
+              color: "var(--foreground)",
             }}
           />
           <Legend

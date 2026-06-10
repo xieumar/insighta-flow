@@ -35,31 +35,36 @@ export function AgeHistogram({ data, loading }: AgeHistogramProps) {
         <BarChart data={chartData} margin={{ left: -20, right: 10, top: 10, bottom: 5 }}>
           <XAxis
             dataKey="range"
-            stroke="hsl(var(--muted-foreground))"
+            stroke="var(--muted-foreground)"
             fontSize={11}
             tickLine={false}
             axisLine={false}
           />
           <YAxis
-            stroke="hsl(var(--muted-foreground))"
+            stroke="var(--muted-foreground)"
             fontSize={11}
             tickLine={false}
             axisLine={false}
           />
           <Tooltip
             contentStyle={{
-              background: "hsl(var(--card))",
-              border: "1px border hsl(var(--border))",
+              background: "var(--card)",
+              border: "1px solid var(--border)",
               borderRadius: "8px",
               fontSize: "11px",
-              color: "hsl(var(--foreground))",
             }}
-            labelClassName="font-bold text-foreground"
+            labelStyle={{
+              color: "var(--foreground)",
+              fontWeight: "bold",
+            }}
+            itemStyle={{
+              color: "var(--foreground)",
+            }}
             formatter={(value: any) => [value, "Users"]}
           />
           <Bar
             dataKey="count"
-            fill="hsl(var(--primary))"
+            fill="var(--primary)"
             radius={[4, 4, 0, 0]}
             maxBarSize={40}
           />
