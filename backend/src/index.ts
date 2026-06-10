@@ -25,8 +25,10 @@ app.get("/health", (req, res) => {
 // Routes
 import { uploadRouter } from "./routes/upload.route";
 import { queryRouter } from "./routes/query.route";
+import { workspaceRouter } from "./routes/workspace.route";
 app.use("/api", uploadRouter);
 app.use("/api", queryRouter);
+app.use("/api", workspaceRouter);
 
 // Error handling middleware (must be registered last)
 app.use(errorHandler);
