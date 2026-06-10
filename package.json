@@ -1,0 +1,13 @@
+{
+  "name": "insighta-flow",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev:frontend": "pnpm --filter @insighta-flow/frontend dev",
+    "dev:backend": "pnpm --filter @insighta-flow/backend dev",
+    "dev": "pnpm run dev:backend & pnpm run dev:frontend",
+    "build": "pnpm --filter @insighta-flow/frontend build",
+    "lint": "pnpm -r lint",
+    "type-check": "pnpm -r type-check"
+  }
+}

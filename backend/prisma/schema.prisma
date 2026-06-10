@@ -1,0 +1,11 @@
+// This is a placeholder schema.
+// The real schema is added in PR-06 (database schema & migrations).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
