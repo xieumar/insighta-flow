@@ -8,16 +8,19 @@ interface ValueInputProps {
   value: any;
   onChange: (value: any) => void;
   disabled?: boolean;
+  hasError?: boolean;
 }
 
-export function ValueInput({ field, value, onChange, disabled }: ValueInputProps) {
+export function ValueInput({ field, value, onChange, disabled, hasError }: ValueInputProps) {
+  if (!field) return null;
+
   const fieldConfig = FIELD_OPTIONS.find((opt) => opt.value === field);
   const fieldType = fieldConfig?.type || "string";
 
   if (field === "gender") {
     return (
       <Select value={value} onValueChange={onChange} disabled={disabled}>
-        <SelectTrigger className="w-[180px] h-9 text-xs">
+        <SelectTrigger className={`w-[180px] h-9 text-xs ${hasError ? "border-destructive focus:ring-destructive" : ""}`}>
           <SelectValue placeholder="Gender" />
         </SelectTrigger>
         <SelectContent>
@@ -34,7 +37,7 @@ export function ValueInput({ field, value, onChange, disabled }: ValueInputProps
   if (field === "purchased_category") {
     return (
       <Select value={value} onValueChange={onChange} disabled={disabled}>
-        <SelectTrigger className="w-[180px] h-9 text-xs">
+        <SelectTrigger className={`w-[180px] h-9 text-xs ${hasError ? "border-destructive focus:ring-destructive" : ""}`}>
           <SelectValue placeholder="Category" />
         </SelectTrigger>
         <SelectContent>
@@ -55,7 +58,7 @@ export function ValueInput({ field, value, onChange, disabled }: ValueInputProps
         value={value ? String(value).split("T")[0] : ""}
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
-        className="w-[180px] h-9 text-xs"
+        className={`w-[180px] h-9 text-xs ${hasError ? "border-destructive focus-visible:ring-destructive" : ""}`}
       />
     );
   }
@@ -64,11 +67,11 @@ export function ValueInput({ field, value, onChange, disabled }: ValueInputProps
     return (
       <Input
         type="number"
-        placeholder="Value"
+        placeholder="Enter number..."
         value={value}
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
-        className="w-[180px] h-9 text-xs"
+        className={`w-[180px] h-9 text-xs ${hasError ? "border-destructive focus-visible:ring-destructive" : ""}`}
       />
     );
   }
@@ -76,11 +79,11 @@ export function ValueInput({ field, value, onChange, disabled }: ValueInputProps
   return (
     <Input
       type="text"
-      placeholder="Value"
+      placeholder="Enter value..."
       value={value}
       onChange={(e) => onChange(e.target.value)}
       disabled={disabled}
-      className="w-[180px] h-9 text-xs"
+      className={`w-[180px] h-9 text-xs ${hasError ? "border-destructive focus-visible:ring-destructive" : ""}`}
     />
   );
 }

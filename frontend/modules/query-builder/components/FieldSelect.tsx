@@ -9,9 +9,9 @@ interface FieldSelectProps {
 
 export function FieldSelect({ value, onChange }: FieldSelectProps) {
   return (
-    <Select value={value} onValueChange={onChange}>
+    <Select value={value || undefined} onValueChange={onChange}>
       <SelectTrigger className="w-[160px] h-9 text-xs">
-        <SelectValue placeholder="Select Field" />
+        <SelectValue placeholder="Select field..." />
       </SelectTrigger>
       <SelectContent>
         {FIELD_OPTIONS.map((opt) => (

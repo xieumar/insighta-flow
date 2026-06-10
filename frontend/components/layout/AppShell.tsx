@@ -47,7 +47,7 @@ export function AppShell({ children }: AppShellProps) {
             </p>
           )}
         </Sidebar>
-        <main className="flex-1 overflow-y-auto bg-background focus:outline-none">
+        <main className="flex-1 flex flex-col overflow-hidden bg-background focus:outline-none">
           {children}
         </main>
       </div>

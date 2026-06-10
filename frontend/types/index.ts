@@ -9,7 +9,7 @@ export interface UserProfile {
   created_at: string;
 }
 
-export type RuleField = "age" | "gender" | "country" | "income" | "purchased_category" | "created_at";
+export type RuleField = "age" | "gender" | "country" | "income" | "purchased_category" | "created_at" | "";
 
 export type RuleOperator = 
   | "equals" 

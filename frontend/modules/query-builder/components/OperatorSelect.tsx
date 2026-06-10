@@ -12,15 +12,16 @@ export function OperatorSelect({ field, value, onChange }: OperatorSelectProps) 
   const fieldConfig = FIELD_OPTIONS.find((opt) => opt.value === field);
   const fieldType = fieldConfig?.type || "string";
 
-  // Filter operator options applicable to the selected field type
   const applicableOperators = OPERATOR_OPTIONS.filter((opt) =>
     opt.applicableTypes.includes(fieldType)
   );
 
+  const disabled = !field;
+
   return (
-    <Select value={value} onValueChange={onChange}>
+    <Select value={disabled ? undefined : value} onValueChange={onChange} disabled={disabled}>
       <SelectTrigger className="w-[160px] h-9 text-xs">
-        <SelectValue placeholder="Select Operator" />
+        <SelectValue placeholder="Operator..." />
       </SelectTrigger>
       <SelectContent>
         {applicableOperators.map((opt) => (

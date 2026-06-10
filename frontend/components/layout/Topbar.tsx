@@ -21,9 +21,10 @@ export function Topbar({ onMenuClick, onRunQuery, queryLoading }: TopbarProps) {
   const datasetId = useWorkspaceStore((state) => state.datasetId);
   const { status, metrics } = useUpload();
   const [open, setOpen] = useState(false);
-  const { runQuery, loading: executionLoading } = useQueryExecution();
+  const { runQuery, loading: executionLoading, isValid } = useQueryExecution();
 
   const isLoading = queryLoading !== undefined ? queryLoading : executionLoading;
+  const isButtonDisabled = isLoading || !isValid;
   const handleRunQuery = onRunQuery || (() => runQuery());
 
   function toggleTheme() {
@@ -79,7 +80,7 @@ export function Topbar({ onMenuClick, onRunQuery, queryLoading }: TopbarProps) {
           <Button
             size="sm"
             onClick={handleRunQuery}
-            disabled={isLoading}
+            disabled={isButtonDisabled}
             className="h-9 gap-1.5 text-xs font-bold shadow-md shadow-primary/10"
           >
             <Play className="size-3.5 fill-current" />

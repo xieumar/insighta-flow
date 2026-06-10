@@ -14,7 +14,7 @@ interface QueryActions {
 const createDefaultRule = (): QueryRule => ({
   id: Math.random().toString(36).substring(2, 9),
   type: "rule",
-  field: "age",
+  field: "",
   operator: "equals",
   value: "",
 });
