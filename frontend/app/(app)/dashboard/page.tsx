@@ -4,7 +4,11 @@ import { Database, FileSpreadsheet, Layers, Play, Settings2, Sparkles, TrendingU
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
+import { DropZone, IngestionSummary, useUpload } from "@/modules/upload";
+
 export default function DashboardPage() {
+  const { status, metrics } = useUpload();
+
   return (
     <div className="flex-1 space-y-8 p-6 md:p-8">
       {/* Welcome Hero banner */}
@@ -41,8 +45,10 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="mt-4">
-            <span className="text-2xl font-bold">0</span>
-            <span className="ml-2 text-xs text-muted-foreground">— No active dataset</span>
+            <span className="text-2xl font-bold">{metrics ? metrics.rows_inserted : 0}</span>
+            <span className="ml-2 text-xs text-muted-foreground">
+              {metrics ? "— Active dataset" : "— No active dataset"}
+            </span>
           </div>
         </div>
 
@@ -86,18 +92,13 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Main Workspace empty state mockup */}
-      <div className="rounded-xl border border-dashed border-border bg-card/50 p-12 text-center">
-        <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-muted">
-          <Settings2 className="size-6 text-muted-foreground" />
-        </div>
-        <h3 className="mt-4 text-lg font-semibold">Start building your pipeline</h3>
-        <p className="mt-2 text-sm text-muted-foreground max-w-sm mx-auto">
-          Please upload a CSV file with columns like Age, Gender, Income, and Purchase Date to enable query filtering and charting.
-        </p>
-        <Button variant="outline" className="mt-6">
-          Learn how to structure your CSV
-        </Button>
+      {/* Main Workspace Workspace area */}
+      <div className="space-y-6">
+        {status === "success" && metrics ? (
+          <IngestionSummary />
+        ) : (
+          <DropZone />
+        )}
       </div>
     </div>
   );
