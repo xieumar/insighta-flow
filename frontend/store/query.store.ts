@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import { QueryGroup, QueryRule, QueryNode, RuleField, RuleOperator } from "../types";
 
 interface QueryActions {
@@ -32,7 +33,6 @@ const defaultInitialQuery = (): QueryGroup => {
   return root;
 };
 
-// Helper function to recursively modify nodes in the query tree
 const updateNodeInTree = (
   root: QueryGroup,
   targetId: string,
@@ -55,71 +55,78 @@ const updateNodeInTree = (
   return { ...root, rules: updatedRules };
 };
 
-export const useQueryStore = create< { query: QueryGroup } & QueryActions>((set) => ({
-  query: defaultInitialQuery(),
+export const useQueryStore = create<{ query: QueryGroup } & QueryActions>()(
+  persist(
+    (set) => ({
+      query: defaultInitialQuery(),
 
-  setQuery: (query) => set({ query }),
+      setQuery: (query) => set({ query }),
 
-  updateCombinator: (groupId, combinator) =>
-    set((state) => ({
-      query: updateNodeInTree(state.query, groupId, (node) => {
-        if (node.type === "group") {
-          return { ...node, combinator };
-        }
-        return node;
-      }),
-    })),
+      updateCombinator: (groupId, combinator) =>
+        set((state) => ({
+          query: updateNodeInTree(state.query, groupId, (node) => {
+            if (node.type === "group") {
+              return { ...node, combinator };
+            }
+            return node;
+          }),
+        })),
 
-  addRule: (groupId) =>
-    set((state) => ({
-      query: updateNodeInTree(state.query, groupId, (node) => {
-        if (node.type === "group") {
-          return {
-            ...node,
-            rules: [...node.rules, createDefaultRule()],
-          };
-        }
-        return node;
-      }),
-    })),
+      addRule: (groupId) =>
+        set((state) => ({
+          query: updateNodeInTree(state.query, groupId, (node) => {
+            if (node.type === "group") {
+              return {
+                ...node,
+                rules: [...node.rules, createDefaultRule()],
+              };
+            }
+            return node;
+          }),
+        })),
 
-  updateRule: (ruleId, updates) =>
-    set((state) => ({
-      query: updateNodeInTree(state.query, ruleId, (node) => {
-        if (node.type === "rule") {
-          return { ...node, ...updates };
-        }
-        return node;
-      }),
-    })),
+      updateRule: (ruleId, updates) =>
+        set((state) => ({
+          query: updateNodeInTree(state.query, ruleId, (node) => {
+            if (node.type === "rule") {
+              return { ...node, ...updates };
+            }
+            return node;
+          }),
+        })),
 
-  removeNode: (parentGroupId, nodeId) =>
-    set((state) => ({
-      query: updateNodeInTree(state.query, parentGroupId, (node) => {
-        if (node.type === "group") {
-          return {
-            ...node,
-            rules: node.rules.filter((rule) => rule.id !== nodeId),
-          };
-        }
-        return node;
-      }),
-    })),
+      removeNode: (parentGroupId, nodeId) =>
+        set((state) => ({
+          query: updateNodeInTree(state.query, parentGroupId, (node) => {
+            if (node.type === "group") {
+              return {
+                ...node,
+                rules: node.rules.filter((rule) => rule.id !== nodeId),
+              };
+            }
+            return node;
+          }),
+        })),
 
-  addGroup: (groupId) =>
-    set((state) => ({
-      query: updateNodeInTree(state.query, groupId, (node) => {
-        if (node.type === "group") {
-          const newGroup = createDefaultGroup("OR");
-          newGroup.rules.push(createDefaultRule());
-          return {
-            ...node,
-            rules: [...node.rules, newGroup],
-          };
-        }
-        return node;
-      }),
-    })),
+      addGroup: (groupId) =>
+        set((state) => ({
+          query: updateNodeInTree(state.query, groupId, (node) => {
+            if (node.type === "group") {
+              const newGroup = createDefaultGroup("OR");
+              newGroup.rules.push(createDefaultRule());
+              return {
+                ...node,
+                rules: [...node.rules, newGroup],
+              };
+            }
+            return node;
+          }),
+        })),
 
-  resetQuery: () => set({ query: defaultInitialQuery() }),
-}));
+      resetQuery: () => set({ query: defaultInitialQuery() }),
+    }),
+    {
+      name: "insighta-query-storage",
+    }
+  )
+);
