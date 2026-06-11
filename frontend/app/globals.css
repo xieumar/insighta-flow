@@ -169,3 +169,64 @@
 .animate-slide-left { animation: slide-in-left 0.2s ease-out; }
 .animate-spin-slow  { animation: spin-slow  1.5s linear infinite; }
 .animate-pulse-ring { animation: pulse-ring   2s ease-out infinite; }
+
+.driver-popover {
+  background-color: var(--card) !important;
+  color: var(--foreground) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-lg) !important;
+  font-family: var(--font-sans) !important;
+  box-shadow: var(--shadow-md) !important;
+  padding: 16px !important;
+}
+
+.driver-popover-title {
+  color: var(--foreground) !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  margin-bottom: 6px !important;
+}
+
+.driver-popover-description {
+  color: var(--muted-foreground) !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
+.driver-popover-close-btn {
+  color: var(--muted-foreground) !important;
+}
+
+.driver-popover-close-btn:hover {
+  color: var(--foreground) !important;
+}
+
+.driver-popover-next-btn, .driver-popover-prev-btn {
+  background-color: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+  border: none !important;
+  text-shadow: none !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  border-radius: var(--radius-md) !important;
+  padding: 6px 12px !important;
+}
+
+.driver-popover-next-btn:hover {
+  opacity: 0.9 !important;
+}
+
+.driver-popover-prev-btn {
+  background-color: var(--muted) !important;
+  color: var(--foreground) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.driver-popover-prev-btn:hover {
+  background-color: var(--accent) !important;
+}
+
+.driver-popover-progress-text {
+  color: var(--muted-foreground) !important;
+  font-size: 10px !important;
+}

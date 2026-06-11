@@ -5,6 +5,7 @@ import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { useTour } from "../hooks/useTour";
 import { TOUR_STEPS } from "../config/tour-steps";
+import { useWorkspaceStore } from "@/store";
 
 interface TourProviderProps {
   children: ReactNode;
@@ -12,6 +13,7 @@ interface TourProviderProps {
 
 export function TourProvider({ children }: TourProviderProps) {
   const { isActive, start, end } = useTour();
+  const datasetId = useWorkspaceStore((state) => state.datasetId);
 
   useEffect(() => {
     const tourDone = localStorage.getItem("insighta-tour-done");
@@ -26,11 +28,24 @@ export function TourProvider({ children }: TourProviderProps) {
   useEffect(() => {
     if (!isActive) return;
 
+    const filteredSteps = TOUR_STEPS.filter((step) => {
+      if (!datasetId) {
+        const excludedElements = [
+          "#tour-query-builder",
+          "#tour-run-query",
+          "#tour-tab-results",
+          "#tour-tab-analytics",
+        ];
+        return !excludedElements.includes(step.element as string);
+      }
+      return true;
+    });
+
     const driverObj = driver({
       showProgress: true,
       allowClose: true,
       overlayColor: "rgba(0, 0, 0, 0.75)",
-      steps: TOUR_STEPS,
+      steps: filteredSteps,
       onDestroyed: () => {
         localStorage.setItem("insighta-tour-done", "true");
         end();
@@ -42,7 +57,7 @@ export function TourProvider({ children }: TourProviderProps) {
     return () => {
       driverObj.destroy();
     };
-  }, [isActive, end]);
+  }, [isActive, end, datasetId]);
 
   return <>{children}</>;
 }
