@@ -56,7 +56,7 @@ export function LoadWorkspaceModal() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="h-9 gap-1.5 text-xs font-semibold">
+        <Button id="tour-open" variant="outline" size="sm" className="h-9 gap-1.5 text-xs font-semibold">
           <FolderOpen className="size-4" />
           Open
         </Button>

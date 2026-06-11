@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { BarChart3, Menu, Moon, Play, Sun, UploadCloud } from "lucide-react";
+import { BarChart3, Menu, Moon, Play, Sun, UploadCloud, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -10,6 +10,7 @@ import { useWorkspaceStore } from "@/store";
 import { useState } from "react";
 import { useQueryExecution } from "@/modules/results";
 import { WorkspaceBadge, SaveWorkspaceButton, LoadWorkspaceModal } from "@/modules/workspace";
+import { useTour } from "@/modules/tour";
 
 interface TopbarProps {
   onMenuClick?: () => void;
@@ -59,7 +60,7 @@ export function Topbar({ onMenuClick, onRunQuery, queryLoading }: TopbarProps) {
 
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline" size="sm" className="h-9 gap-1.5 text-xs font-semibold">
+            <Button id="tour-import" variant="outline" size="sm" className="h-9 gap-1.5 text-xs font-semibold">
               <UploadCloud className="size-4" />
               {datasetId ? "Change Dataset" : "Import"}
             </Button>
@@ -83,6 +84,7 @@ export function Topbar({ onMenuClick, onRunQuery, queryLoading }: TopbarProps) {
 
         {datasetId && (
           <Button
+            id="tour-run-query"
             size="sm"
             onClick={handleRunQuery}
             disabled={isButtonDisabled}
@@ -92,6 +94,23 @@ export function Topbar({ onMenuClick, onRunQuery, queryLoading }: TopbarProps) {
             {isLoading ? "Running..." : "Run Query"}
           </Button>
         )}
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => useTour.getState().start()}
+                aria-label="Take a tour"
+                className="size-9"
+              >
+                <HelpCircle className="size-4 text-muted-foreground hover:text-foreground" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Take a tour</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
         <TooltipProvider>
           <Tooltip>

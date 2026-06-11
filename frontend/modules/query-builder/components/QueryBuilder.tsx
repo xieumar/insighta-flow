@@ -8,7 +8,7 @@ export function QueryBuilder() {
   const query = useQueryStore((state) => state.query);
 
   return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 items-start">
+    <div id="tour-query-builder" className="grid grid-cols-1 gap-6 lg:grid-cols-3 items-start">
       <div className="lg:col-span-2">
         <QueryGroup group={query} />
       </div>
