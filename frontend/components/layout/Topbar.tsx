@@ -9,6 +9,7 @@ import { DropZone, IngestionSummary, useUpload } from "@/modules/upload";
 import { useWorkspaceStore } from "@/store";
 import { useState } from "react";
 import { useQueryExecution } from "@/modules/results";
+import { WorkspaceBadge, SaveWorkspaceButton, LoadWorkspaceModal } from "@/modules/workspace";
 
 interface TopbarProps {
   onMenuClick?: () => void;
@@ -46,12 +47,16 @@ export function Topbar({ onMenuClick, onRunQuery, queryLoading }: TopbarProps) {
 
       <div className="flex items-center gap-2" id="tour-logo">
         <BarChart3 className="size-5 text-primary" />
-        <span className="font-semibold tracking-tight text-foreground">Insighta Flow</span>
+        <span className="font-semibold tracking-tight text-foreground mr-1">Insighta Flow</span>
+        <WorkspaceBadge />
       </div>
 
       <div className="flex-1" />
 
       <div className="flex items-center gap-2">
+        <LoadWorkspaceModal />
+        <SaveWorkspaceButton />
+
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button variant="outline" size="sm" className="h-9 gap-1.5 text-xs font-semibold">
