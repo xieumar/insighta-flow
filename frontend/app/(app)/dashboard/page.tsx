@@ -33,6 +33,7 @@ export default function DashboardPage() {
             <div className="space-y-6">
               <div className="flex gap-2 border-b border-border">
                 <button
+                  id="tour-tab-results"
                   onClick={() => setActiveTab("table")}
                   className={`pb-3 text-sm font-semibold border-b-2 px-4 transition-all cursor-pointer -mb-[2px] ${
                     activeTab === "table"
@@ -43,6 +44,7 @@ export default function DashboardPage() {
                   Results
                 </button>
                 <button
+                  id="tour-tab-analytics"
                   onClick={() => setActiveTab("charts")}
                   className={`pb-3 text-sm font-semibold border-b-2 px-4 transition-all cursor-pointer -mb-[2px] ${
                     activeTab === "charts"

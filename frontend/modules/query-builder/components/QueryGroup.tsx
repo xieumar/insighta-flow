@@ -10,9 +10,10 @@ import { FolderPlus, Plus, Trash2 } from "lucide-react";
 interface QueryGroupProps {
   group: IQueryGroup;
   parentId?: string;
+  id?: string;
 }
 
-export function QueryGroup({ group, parentId }: QueryGroupProps) {
+export function QueryGroup({ group, parentId, id }: QueryGroupProps) {
   const updateCombinator = useQueryStore((state) => state.updateCombinator);
   const addRule = useQueryStore((state) => state.addRule);
   const addGroup = useQueryStore((state) => state.addGroup);
@@ -21,7 +22,10 @@ export function QueryGroup({ group, parentId }: QueryGroupProps) {
   const isRoot = !parentId;
 
   return (
-    <div className="relative rounded-xl border border-border bg-card/40 p-4 space-y-4 shadow-sm transition-colors hover:bg-card/60">
+    <div
+      id={id}
+      className="relative rounded-xl border border-border bg-card/40 p-4 space-y-4 shadow-sm transition-colors hover:bg-card/60"
+    >
       {/* Top Header bar */}
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <div className="flex items-center gap-3">

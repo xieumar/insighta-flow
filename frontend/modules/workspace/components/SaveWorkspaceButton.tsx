@@ -29,6 +29,7 @@ export function SaveWorkspaceButton() {
     }}>
       <DialogTrigger asChild>
         <Button
+          id="tour-save"
           variant="outline"
           size="sm"
           className="h-9 gap-1.5 text-xs font-semibold"

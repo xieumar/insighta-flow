@@ -31,7 +31,7 @@ export function Sidebar({ open, onClose, children }: SidebarProps) {
       )}
 
       <aside
-        id="tour-query-builder"
+        id="tour-sidebar"
         aria-label="Query builder"
         className={cn(
           "fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-border bg-sidebar transition-transform duration-300 md:relative md:inset-auto md:z-auto md:translate-x-0 md:transition-none",
