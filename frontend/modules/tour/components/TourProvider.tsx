@@ -44,6 +44,8 @@ export function TourProvider({ children }: TourProviderProps) {
     const driverObj = driver({
       showProgress: true,
       allowClose: true,
+      stagePadding: 6,
+      stageRadius: 6,
       overlayColor: "rgba(0, 0, 0, 0.75)",
       steps: filteredSteps,
       onDestroyed: () => {

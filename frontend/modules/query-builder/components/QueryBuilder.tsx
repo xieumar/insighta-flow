@@ -9,8 +9,8 @@ export function QueryBuilder() {
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 items-start">
-      <div id="tour-query-builder" className="lg:col-span-2">
-        <QueryGroup group={query} />
+      <div className="lg:col-span-2">
+        <QueryGroup id="tour-query-builder" group={query} />
       </div>
       <div className="lg:col-span-1">
         <QueryPreview />
