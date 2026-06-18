@@ -2,7 +2,6 @@
 
 import { useEffect, ReactNode } from "react";
 import { driver } from "driver.js";
-import "driver.js/dist/driver.css";
 import { useTour } from "../hooks/useTour";
 import { TOUR_STEPS } from "../config/tour-steps";
 import { useWorkspaceStore } from "@/store";
