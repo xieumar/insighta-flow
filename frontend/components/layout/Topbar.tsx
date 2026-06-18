@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { BarChart3, Menu, Moon, Play, Sun, UploadCloud, HelpCircle } from "lucide-react";
+import { BarChart3, Moon, Play, Sun, UploadCloud, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -13,12 +13,11 @@ import { WorkspaceBadge, SaveWorkspaceButton, LoadWorkspaceModal } from "@/modul
 import { useTour } from "@/modules/tour";
 
 interface TopbarProps {
-  onMenuClick?: () => void;
   onRunQuery?: () => void;
   queryLoading?: boolean;
 }
 
-export function Topbar({ onMenuClick, onRunQuery, queryLoading }: TopbarProps) {
+export function Topbar({ onRunQuery, queryLoading }: TopbarProps) {
   const { theme, setTheme } = useTheme();
   const datasetId = useWorkspaceStore((state) => state.datasetId);
   const { status, metrics } = useUpload();
@@ -35,17 +34,6 @@ export function Topbar({ onMenuClick, onRunQuery, queryLoading }: TopbarProps) {
 
   return (
     <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border bg-background px-4">
-      <Button
-        variant="ghost"
-        size="icon"
-        className="md:hidden"
-        onClick={onMenuClick}
-        aria-label="Open menu"
-        id="tour-menu-btn"
-      >
-        <Menu />
-      </Button>
-
       <div className="flex items-center gap-2" id="tour-logo">
         <BarChart3 className="size-5 text-primary" />
         <span className="font-semibold tracking-tight text-foreground mr-1">Insighta Flow</span>

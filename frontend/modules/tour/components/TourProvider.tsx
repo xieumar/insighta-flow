@@ -5,6 +5,7 @@ import { driver } from "driver.js";
 import { useTour } from "../hooks/useTour";
 import { TOUR_STEPS } from "../config/tour-steps";
 import { useWorkspaceStore } from "@/store";
+import "driver.js/dist/driver.css";
 
 interface TourProviderProps {
   children: ReactNode;
